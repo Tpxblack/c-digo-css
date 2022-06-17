@@ -1,0 +1,835 @@
+Segue o código abaixo (só mudar algumas coisas no próprio código que está tudo explicando o que cada seção faz) :
+
+    /* 
+Código exclusivo RAWART
+Criador: Walyson Patric
+Divulgador: Andre Raul
+Site: rawart.com.br
+Versão 2022 | Yampi
+*/
+
+/* Configurações gerais do código */
+/* Configure aqui as cores */
+
+:root {
+  
+/* Link da sua logo aqui */ 
+--rawart-logo: url(https://cdn.shopify.com/s/files/1/0443/8573/0725/files/logo-png_790f4658-59d8-4735-84ed-19aa3e4a37f0.png?v=14208632741416545469);
+  
+/* Cor do cabeçalho */  
+ --rawart-logo_background_color: linear-gradient(0deg, #040126, #170750 97%);
+                                              /* posição - cor - cor */ 
+
+/* Tamanho da logo e barra do cabeçalho */   
+--rawart-logo_size: 90px;
+  
+/* Cor da borda colorida */  
+/* Para deixar só uma cor remova tudo depois de 
+   '--colorline-background:' 
+   e coloque o código da cor */  
+--colorline-background:  linear-gradient(160deg, 
+    #3fc583,        /* Cor 1 */
+    #40b4ae 38%,    /* Cor 2 */
+    #40adc1 60%,    /* Cor 3 */
+    #3e73c3 79%,    /* Cor 4 */
+    #3eb9a2 90%);   /* Cor 5 */
+  
+/* Cor de fundo do site, pode por uma imagem em url('link imagem') */   
+--rawart-fundo-site-background: #040126 url('') no-repeat fixed center;
+  
+/* Cor da parte central do checkout, padrão branco */   
+--rawart-fundo-site-central-background: #ffffff;
+  
+/* Cor geral dos botões e detalhes */ 
+--rawart-geral-color: #3fc583;
+--rawart-color: #ffffff;
+  
+/* Cor da borda do box selecionado | desktop */  
+--rawart-box_selecionado: 
+  linear-gradient(43deg, #3fc583, #3facc5);
+                 /* posição - cor - cor */
+}
+
+/* Fix Yampi - 03/06/2022 */
+
+.payment-methods-holder, .store-info-holder, .security-label {
+  display:none !important;
+}
+.discount-flag.f10.bold {
+    display: none;
+}
+
+/* Cabeçalho | Header */
+
+body::before {
+    content: '';
+    background-image: var(--rawart-logo_background_color);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    height: var(--rawart-logo_size);
+    font-size: 62px;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+}
+.inner-body::before {
+    content: '';
+    background: var(--rawart-logo);
+    background-repeat: no-repeat;
+    background-size: calc(110px + var(--rawart-logo_size));
+    background-position: center;
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    margin: 0 auto;
+    width: 100%;
+    height: var(--rawart-logo_size);
+}
+
+/* Borda colorida no header */
+/* Para desabilitar coloque 0 em height */
+
+body::after {
+    content: '';
+    background: var(--colorline-background) no-repeat;
+    background-size: 400% 400%;
+    width: 100%;
+    height: calc(var(--rawart-logo_size) + 5px);
+    font-size: 62px;
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    box-shadow: 0px 5px 22px -9px black;
+    -webkit-animation: rgbAnimation 5s linear 1s infinite;
+    animation: rgbAnimation 5s ease infinite;  
+}
+
+@-webkit-keyframes rgbAnimation {  
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}  
+}  
+@keyframes rgbAnimation {  
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}  
+}  
+
+/* Ocultar header padrão da Yampi */
+
+header.clearfix {
+    display: none;
+}
+.content {
+    padding: 0;
+}
+
+/* Estrutura geral */
+
+body {background: var(--rawart-fundo-site-background);background-size: cover;}
+hr {margin: 0 auto !important;width: 90%;}
+.inner-body {
+    background: var(--rawart-fundo-site-central-background);
+    width: 800px;
+    margin: calc(var(--rawart-logo_size) + 50px) auto 30px;
+    padding: 20px;
+    border: 0px solid #d5d5d5;
+    border-radius: 5px;
+    box-shadow: 0 0 7px -2px #0000003d;
+}
+.container.container-pjax.clearfix {
+    max-width: 800px;
+}
+header.clearfix {
+    background: none;
+    border: 0 solid;
+    box-shadow: 0 0 0 0; 
+}
+.box-checkout.box-checkout.active {
+    box-sizing: border-box;
+    background: var(--rawart-box_selecionado);
+    background-size: 400% 400%; /* Remova para tirar o efeito de movimento */
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 12px -6px #606060;
+    z-index: 0;
+    -webkit-animation: anima_active 5s ease infinite;
+    animation: anima_active 5s ease infinite;  
+}
+@-webkit-keyframes anima_active {  
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}  
+}  
+@keyframes anima_active {  
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}  
+}  
+.box-checkout.box-checkout.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: 4px;
+    border-radius: inherit;
+    background: #fff;
+}
+.box-checkout.box-customer.active,.box-checkout.box-addresses.active {
+    width: 150%;
+}
+.box-checkout.box-customer.link-box-checkout {
+    margin-right: 10px;
+}
+.box-checkout.box-checkout.active .box-title {
+    border-right: 0px solid var(--rawart-geral-color);
+}
+.box-checkout .holder-number, .holder-cols-checkout .box-checkout.active .box-title .holder-number {
+    background: var(--rawart-geral-color);
+    border-radius: 4px !important;
+}
+.box-checkout.link-box-checkout {
+    background: #fff !important;
+    border: 1px solid #e9e9e9 !important;
+}
+.box-checkout.disabled {
+    width: 100% !important;    
+}
+.title.f-h2.ctx-title.bold {
+   color: #cccccc !important;
+}
+.btn-primary, .holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) .holder-number {
+   background: var(--rawart-geral-color) !important;
+}
+.holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) .title, .holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) .green {
+   color: var(--rawart-geral-color) !important;
+}
+.holder-cols-checkout .payments .billet-price, 
+.holder-cols-checkout .payments .deposit-price, 
+.holder-cols-checkout .payments .pix-price, 
+.box-checkout.active .title.f-h2.ctx-title.bold, 
+.holder-cols-checkout .container-shipment .option .inner-label .price,
+.holder-cols-checkout .box-checkout.box-resume .cart_total,
+.form-horizontal .holder-input.valid:after,
+.btn-tertiary, .yampi-purple, .finalization-pix .pix-total .-value {
+  color: var(--rawart-geral-color) !important;
+}
+
+/* Mensagem de erro */
+
+.modal#modal-transaction-error .modal-content {
+    border: 2px solid #666666 !important;
+    box-shadow: 0 0 30px -15px black;
+}
+
+/* Página de pagamento por PIX */
+
+.finalization-pix .pix-code .-holder {
+    box-sizing: border-box;
+    background: var(--rawart-box_selecionado);
+    background-clip: padding-box;
+    position: relative;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 12px -6px #606060;
+    z-index: 0;
+}
+.finalization-pix .pix-code .-holder::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: 4px;
+    border-radius: inherit;
+    background: #fff;
+}
+.finalization-pix .pix-title .-loader {
+   background: var(--rawart-geral-color) !important;
+   color: var(--rawart-color) !important;
+}
+.finalization-pix .pix-title .-loader svg {
+   fill: var(--rawart-color); 
+}
+
+/* Página de pagamento por Boleto */
+
+.alert.alert-warning.mb20 {
+    box-sizing: border-box;
+    background: var(--rawart-box_selecionado);
+    background-clip: padding-box;
+    position: relative;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 12px -6px #606060;
+    z-index: 0;
+}
+.alert.alert-warning.mb20::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: 4px;
+    border-radius: inherit;
+    background: #fff;
+}
+.billet-barcode.text-left.mt10.mb15 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.alert.alert-warning.mb20 .mb15.mt20 {color: #666666;}
+
+/* Configurações da estrutura geral no Celular */
+
+@media (max-width: 1060px) {
+
+/* Estrutura geral */
+  
+.inner-body {width: 90%;padding: 0;}
+.container.container-pjax.clearfix {max-width: 100%;padding: 17px 9px 0 9px;}
+  
+/* Estrutura das etapas de compra */  
+  
+.box-checkout.box-checkout.active {
+    background: none;
+    margin: 0 auto !important;
+}    
+.box-checkout.box-customer.active,.box-checkout.box-addresses.active {
+    width: 100%;
+}    
+  
+/* Ícones no celular */  
+  
+.steps-checkout {
+    display: flex !important;
+    justify-content: center;
+}    
+.checkout-step {
+    margin: 0 5px;
+    padding: 10px;
+    border: 1px solid #cacaca;
+    border-radius: 10px;
+} 
+.checkout-step .holder-icon {
+    border-radius: 5px !important;
+} 
+.checkout-step.enabled.active {
+    border: 1px solid var(--rawart-geral-color);
+    box-shadow: 0px 0px 15px -8px #000000;
+}  
+.steps-checkout .connect {
+    background: none !important;
+    height: 1px !important;
+    border-radius: 10px;
+}    
+.checkout-step.enabled .holder-icon {
+    background: url(https://rawartsites.neocities.org/img/Yampi/dados.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 66%;
+    background-color: var(--rawart-geral-color);
+    border-radius: 0 0 6px 6px;
+    border: 2px solid var(--rawart-geral-color);
+    padding: 7px;
+    margin: 14px 0 11px 0;
+    font-size: 0;   
+}  
+.checkout-step:nth-child(2).enabled .holder-icon {
+    background: url(https://rawartsites.neocities.org/img/Yampi/truck.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75%;
+    background-color: var(--rawart-geral-color);
+    border-radius: 0 0 6px 6px;
+    border: 2px solid var(--rawart-geral-color);
+    padding: 7px;
+    margin: 14px 0 11px 0;
+    font-size: 0; 
+}  
+.checkout-step:nth-child(3).enabled .holder-icon {  
+    background: url(https://rawartsites.neocities.org/img/Yampi/card.svg);
+    background-repeat: no-repeat;
+    background-position: center 8px;
+    background-size: 80%;
+    background-color: var(--rawart-geral-color);
+    border-radius: 0 0 6px 6px;
+    border: 2px solid var(--rawart-geral-color);
+    padding: 7px;
+    margin: 14px 0 11px 0;
+    font-size: 0;   
+}  
+.checkout-step.disabled:nth-child(2) .holder-icon {
+    background: url(https://rawartsites.neocities.org/img/Yampi/truck.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75%;
+    background-color: #bdbdbd;
+    border-radius: 0 0 6px 6px;
+    border: 2px solid #bdbdbd;
+    padding: 7px;
+    margin: 14px 0 11px 0;
+    font-size: 0;
+} 
+.checkout-step.disabled:nth-child(3) .holder-icon {
+    background: url(https://rawartsites.neocities.org/img/Yampi/card.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-color: #bdbdbd;
+    border-radius: 0 0 6px 6px;
+    border: 2px solid #bdbdbd;
+    padding: 7px;
+    margin: 14px 0 11px 0;
+    font-size: 0;
+}  
+.checkout-step:nth-child(3) .holder-icon {
+    background: url(https://rawartsites.neocities.org/img/Yampi/card.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-color: #bdbdbd;
+    border-radius: 0 0 6px 6px;
+    border: 2px solid #bdbdbd;
+    padding: 7px;
+    margin: 14px 0 11px 0;
+    font-size: 0;
+  }  
+}
+
+/* Base coluna 1 e 2 */
+
+.col-checkout.col-1 {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+}
+
+/* Configurações da 'Base coluna 1 e 2' no Celular */
+
+@media (max-width: 700px) {
+.col-checkout.col-1 {
+    display: block;
+  }
+}
+
+/* Coluna 1 - Dados Pessoais */
+
+.box-customer {
+    margin: 0 10px 20px 0 !important;
+}
+.box-checkout.box-customer.active .box-title {
+    border-right: 0px solid var(--rawart-geral-color) !important;
+}
+button.btn.btn-primary.btn-block.btn-send {
+    background: var(--rawart-geral-color) !important;
+}
+
+/* Coluna 2 - Entrega */
+
+.box-checkout.box-addresses.disabled { 
+    background: #f8f8f8;
+    opacity: 1;
+}
+.box-checkout.box-addresses.active .box-title {
+    border-right: 0px solid var(--rawart-geral-color) !important;
+}
+
+/* Coluna 3 - Pagamento */
+
+.payments .holder-icheck .holder-label {
+    margin: -15px 0 0 4px;
+}
+.holder-cols-checkout .col-checkout.col-2 {
+    width: 50% !important;
+}
+.holder-cols-checkout .payments .payment {
+    display: grid;
+    border: 2px solid var(--rawart-geral-color);
+}
+.holder-cols-checkout .payments .payment.selected {
+    background: #fff !important;
+    border: 2px solid var(--rawart-geral-color) !important;
+}
+.holder-cols-checkout .payments .payment:hover {
+    background: #fff;
+    border: 2px solid var(--rawart-geral-color);
+    box-shadow: 0 0 11px -2px var(--rawart-geral-color);
+}
+.iradio_minimal {
+    background: none;
+    border: 2px solid var(--rawart-geral-color);
+}
+.iradio_minimal.hover {
+    background: var(--rawart-geral-color);
+    box-shadow: 0 0 0px 2px #f3f6f8 inset;
+}
+.iradio_minimal.checked {
+    background: var(--rawart-geral-color);
+    box-shadow: 0 0 0px 2px #f3f6f8 inset;
+}
+.box-checkout.box-payment.disabled {
+    background: #f8f8f8;
+    opacity: 1;
+}
+.holder-cols-checkout .cart-resume .detail.total {
+    color: var(--rawart-geral-color);
+}
+.box-0 .payment-header::after, .box-10 .payment-header::after { 
+    content: 'APROVAÇÃO IMEDIATA';
+    background: var(--rawart-geral-color);
+    font-size: 10px;
+    font-weight: 700;
+    font-family: sans-serif;
+    color: white;
+    padding: 10px;
+    border-radius: 2px;
+    right: 18px;
+    position: absolute;
+}
+
+.box-8 .payment-header::after {
+    background: var(--rawart-geral-color);
+    content: 'APROVAÇÃO EM 3 DIAS';
+    font-size: 10px;
+    font-weight: 700;
+    font-family: sans-serif;
+    color: white;
+    padding: 10px;
+    border-radius: 2px;
+    right: 18px;
+    position: absolute;
+}
+.payment.payment-trigger.credit-card.box-0.mt15 {
+    margin: 34px 0 12px 0;
+}
+.payment.payment-trigger.credit-card.box-0.mt15:before {
+    content: '10% DE DESCONTO PAGANDO COM PIX OU CARTÃO';
+    background: #ffffff;
+    display: inline;
+    position: relative;
+    margin: -20px auto 0;
+    border: 2px solid var(--rawart-geral-color);
+    padding: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--rawart-geral-color);
+    border-radius: 6px;
+}
+@media (max-width: 1060px) {
+  
+.holder-cols-checkout .col-checkout.col-2 {
+    width: 100% !important;
+}  
+.holder-cols-checkout .payments .payment.selected {
+    display: ;
+} 
+.box-0 .payment-content {  
+    margin: 50px 10px 0 10px;  
+} 
+.payment-content {
+    margin: 26px 10px 0 10px;
+    padding: 15px 0 15px 0 !important;
+    border-top: 1px solid #dddddd;
+} 
+.col-checkout:not(.col-3) .box-checkout.active:not(.upsell) {
+    background: none;
+    padding: 20px 0 0 0;
+    box-shadow: 0 0 0 0;
+  }    
+  
+}
+
+/* Order Bump */
+
+.orderbump {
+    background: #fff;
+    border: 1px dashed var(--rawart-geral-color);
+}
+.orderbump_button {
+    background: var(--rawart-geral-color);
+}
+.orderbump_button:hover {
+    background: var(--rawart-geral-color);
+    opacity: 0.8;
+}
+.orderbump_price {
+    color: var(--rawart-geral-color) !important;
+}
+.orderbumps_offer-title, .orderbumps_offer-total {
+    background: none;
+    color: var(--rawart-geral-color);
+    border: 1px solid var(--rawart-geral-color);
+}
+
+/* Popup de Desconto */
+
+.btn-purple:not(.btn-text) {
+    background: var(--rawart-geral-color);
+    color: var(--rawart-color);
+}
+.btn-purple:not(.btn-text):hover {
+    background: var(--rawart-geral-color);
+    opacity: 0.8;
+}
+
+/* Coluna Resumo */
+
+.col-checkout.col-3 {
+    width: 50%;
+    top: calc(var(--rawart-logo_size) + 30px);
+}
+.box-checkout.box-resume.opened.-force-open, .box-checkout.box-resume.-force-open  {
+    padding: 10px 18px 0 18px;
+    border: 1px solid #e9e9e9;
+    box-shadow: 0 0 0 0;
+}
+.cart-resume.mt10 {
+    background: radial-gradient(white, #fbfbfb);
+    padding: 10px 15px;
+    border: 2px solid var(--rawart-geral-color);
+    border-radius: 10px;
+    box-shadow: 0px 18px 19px -25px #565656;
+}
+.thumb-product.block {
+    border-radius: 10px;
+}
+.item-row.item-holder-quantity-price.c-text.medium:after {
+    content: 'ÚLTIMO DIA DE PROMOÇÃO';
+    background: var(--rawart-geral-color);
+    display: block;
+    width: max-content;
+    margin: 5px 0 0 0;
+    padding: 7px;
+    text-align: center;
+    color: white;
+    border-radius: 6px;
+}
+.value.js-cart-total {
+    font-size: 25px !important;
+}
+.value.js-cart-total:after {
+    content: 'em até 12x no cartão';
+    display: flex;
+    left: 0;
+    font-size: 14px;
+    color: #666666;
+}
+@media (max-width: 1060px) {
+  
+.holder-cols-checkout .box-checkout.box-resume.opened {
+    padding: 10px;
+    border: 2px solid var(--rawart-geral-color);
+    box-shadow: 0 0 0 0;
+}  
+.col-checkout.col-3 {
+    width: 100%;
+    position: relative;
+    top: 0;
+    order: ;
+  }  
+.holder-cols-checkout .box-checkout.box-resume:not(.opened) {
+    background: #ffffff;
+    margin: 0 auto 17px;
+} 
+.holder-cols-checkout .box-checkout.box-resume .box-content>div:not(.holder-container-resume):after {display:none;}  
+.holder-cols-checkout .box-checkout.box-resume .box-content {padding: 0;} 
+.holder-cols-checkout .box-checkout.opened.box-resume .c-text {margin: -6px 0 0 0;}    
+.holder-cols-checkout .box-checkout:not(.opened).box-resume .c-text {margin: 0 0 -8px 0;}  
+.col-checkout.col-3 .box-resume.-force-open .-total {color:var(--rawart-geral-color);} 
+  
+}
+
+/* Coluna Comentários | testimonials */
+
+.col-checkout.col-4 {
+    width: 100%;
+}
+
+.container-testimonials {
+    display: flex;
+    max-width: 100% !important;
+    justify-content: center;
+    box-shadow: 0 0 0 0;
+}
+
+@media (max-width:768px) {
+  
+.container-testimonials {
+    width: 95%;
+    margin: 38px auto 0;
+    box-shadow: 0 0 8px -5px black;
+  }
+  
+}
+
+/* Rodapé - Configurações gerais */
+
+footer {
+  background: none;
+  padding: 0;
+}
+footer .container {
+  border: 0 solid;
+  padding: 28px 0 0 0;
+}
+footer .container.flex.between {
+    display: flex;
+    padding: 30px 0 10px 0;
+    border: 0;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+footer::after {
+    content: '©️ 2022 - Todos os direitos reservados'
+             ' - CNPJ: 010.573.521/0001-91'
+             '\A Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP – CEP 06233-90.';
+             /* O \A serve para pular uma linha */
+    display: block;
+    padding: 5px 0;
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+    color: #b7b7b7;
+    white-space: pre-wrap;
+    line-height: 1.8;
+} 
+
+/* Selos no rodapé */
+
+.content::after {
+    content: 'Pagamento Seguro'; /* Título */
+    background: linear-gradient(90deg, white, white, white);
+    width: 50%;
+    height: 33px;
+    display: flex;
+    position: relative;
+    margin: 20px auto 32px;
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to right, white, var(--rawart-geral-color), white) 1 0%;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--rawart-geral-color);
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 23px 20px -16px var(--rawart-geral-color);
+}
+footer::before {
+    content:'';
+    background:url(https://rawartsites.neocities.org/img/Yampi/SVG/selo.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40%;
+    height: 50px;
+    display: flex;
+    position: relative;
+    margin: -10px auto -50px;
+    align-items: center;
+}
+footer .container::before {
+    content:'';
+    background:url(https://rawartsites.neocities.org/img/Yampi/PNG/cards.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50%;
+    height: 50px;
+    display: flex;
+    position: relative;
+    margin: calc(10px + 1vh) auto 5px;
+    align-items: center;
+}
+footer .container::after {
+    content: 'RAWART'; /* Nome do site */
+    width: 100%;
+    height: 50px;
+    display: flex;
+    position: relative;
+    margin: 10px auto -22px;
+    font-size: 20px; /* Tamanho do texto */
+    font-weight: 100;
+    letter-spacing: 10px; /* Distância das letras */
+    color: #b7b7b7; /* Cor do texto */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fim dos selos no rodapé */
+
+@media (max-width:1060px) {
+  
+/* Rodapé - Configurações para celular */  
+  
+footer {padding: 0 0 23px 0;}  
+footer::after {
+    content: '©️ 2022 - Todos os direitos reservados' '\A'
+             'CNPJ: 010.573.521/0001-91' '\A'
+             'Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP – CEP 06233-90.';
+             /* O '\A' serve para pular uma linha */
+    width: 80%;
+    display: block;
+    padding: 5px 25px;
+    margin: 22px auto 0;
+    font-size: 13px;
+    text-align: center;
+    color: #b7b7b7;
+    white-space: pre-wrap;
+    line-height: 1.8;
+}  
+  
+/* Selos rodapé no celular */
+
+.content::after {
+    content: 'Pagamento Seguro'; /* Título */
+    width: 80%;
+    height: 33px;
+    margin: 40px auto 0;
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to right, white, var(--rawart-geral-color), white) 1 0%;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    box-shadow: 0px 23px 20px -16px var(--rawart-geral-color);
+}
+footer::before {
+    content:'';
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: calc(50px + 5vh);
+    margin: calc(30px - 5vh) auto -30px;
+}
+footer .container::before{display:none;}  
+footer .container::after {
+    content:'';
+    background:url(https://rawartsites.neocities.org/img/Yampi/SVG/card.svg); 
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: calc(58px + 14vw);
+    margin: calc(-10px - 2vw) auto -24px;
+}
+
+/* Fim dos selos rodapé no celular */
+}
